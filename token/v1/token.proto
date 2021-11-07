@@ -1,0 +1,29 @@
+syntax = "proto3";
+package token.v1;
+option go_package = "token/v1";
+
+import "google/protobuf/timestamp.proto";
+
+message ApplyRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message ApplyResponse {
+  string token = 1;
+  google.protobuf.Timestamp expire = 2;
+}
+
+message ParseRequest {
+  string token = 1;
+}
+
+message ParseResponse {
+  int64 user_id = 1;
+  string username = 2;
+  google.protobuf.Timestamp expire = 3;
+}
+service TokenService {
+  rpc Apply(ApplyRequest) returns (ApplyResponse){}
+  rpc Parse(ParseRequest) returns (ParseResponse){}
+}
